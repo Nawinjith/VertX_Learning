@@ -1,0 +1,5 @@
+com\example\UpdateData.class
+com\example\RedisVerticle.class
+com\example\HttpServer.class
+com\example\Listener.class
+com\example\MainVerticle.class
