@@ -1,0 +1,4 @@
+com\example\HttpServiceVerticle.class
+com\example\RedisVerticle.class
+com\example\ResponseVerticle.class
+com\example\MainVerticle.class
