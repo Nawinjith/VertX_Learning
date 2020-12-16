@@ -6,6 +6,7 @@ import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.templ.freemarker.FreeMarkerTemplateEngine;
 
 public class HttpServer extends AbstractVerticle {
@@ -14,9 +15,11 @@ public class HttpServer extends AbstractVerticle {
     private final Logger logger = LoggerFactory.getLogger(HttpServer.class);
     
     @Override
-    public void start(Promise<Void> Promise) throws Exception {
+    public void start(Promise<Void> Promise) throws Exception { 
 
         Router router = Router.router(vertx);
+
+        router.route().handler(BodyHandler.create());
 
         router.get("/").handler(this::indexHandler);
         router.post("/submit").handler(this::updateNumber);
@@ -56,18 +59,20 @@ public class HttpServer extends AbstractVerticle {
     }
 
 
+
     private void updateNumber(RoutingContext ctx) {
 
-        System.out.println(ctx.request());
         String currNumber = ctx.request().getParam("number");
         logger.info("Number Entered : "+currNumber);
         
         vertx.eventBus().request("number.update", currNumber ,  reply -> {
-        
+
+            ctx.response().setStatusCode(303);
+            ctx.response().putHeader("Location", "/");
             ctx.request().response().end((String)reply.result().body());
 
         });
     
     }
 
-  }
+}

@@ -26,5 +26,3 @@ public class Listener extends AbstractVerticle {
     }
   }
 
-
-  //meken req ekak yawanna
