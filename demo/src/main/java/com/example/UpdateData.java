@@ -24,10 +24,11 @@ public class UpdateData extends AbstractVerticle {
 
             vertx.eventBus().publish("number.updates", payload);
 
-            msg.reply(String.format("New value : %d ",newVal));
+            msg.reply(Integer.toString(newVal));
 
-            Promise.complete();
+            
         });
+        Promise.complete();
     }
   
 }

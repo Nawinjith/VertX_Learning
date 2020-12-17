@@ -48,6 +48,14 @@ public class HttpServer extends AbstractVerticle {
 
     void indexHandler(RoutingContext ctx){
 
+        // String pageName = ctx.request().getParam("value");  
+
+        // if (pageName == null || pageName.isEmpty()) {
+            ctx.put("value", "NULL");
+        // } else {
+        //     ctx.put("value", pageName);
+        // }
+
         templateEngine.render(ctx.data(), "templates/index.ftl", ar -> {
             if (ar.succeeded()) {
                 ctx.response().putHeader("Content-Type", "text/html");
@@ -64,12 +72,29 @@ public class HttpServer extends AbstractVerticle {
 
         String currNumber = ctx.request().getParam("number");
         logger.info("Number Entered : "+currNumber);
+
+        
         
         vertx.eventBus().request("number.update", currNumber ,  reply -> {
 
-            ctx.response().setStatusCode(303);
-            ctx.response().putHeader("Location", "/");
-            ctx.request().response().end((String)reply.result().body());
+            // ctx.response().setStatusCode(303);
+            // ctx.response().putHeader("Location", "/");
+
+            System.out.print((String)reply.result().body());
+            // ctx.request().response().end((String)reply.result().body());
+
+            
+            ctx.put("value", (String)reply.result().body());
+
+            templateEngine.render(ctx.data(), "templates/index.ftl", ar -> {
+                if (ar.succeeded()) {
+                    
+                    ctx.response().putHeader("Content-Type", "text/html");
+                    ctx.response().end(ar.result());
+                } else {
+                    ctx.fail(ar.cause());
+                }
+            });
 
         });
     

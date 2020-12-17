@@ -22,7 +22,10 @@ public class Listener extends AbstractVerticle {
 
         logger.info("Number Incremented to : "+number);
         
+        
       });
+
+      
     }
   }
 
