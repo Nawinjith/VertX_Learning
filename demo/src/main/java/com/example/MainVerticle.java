@@ -14,18 +14,18 @@ import io.vertx.core.Promise;
   
       dbVerticleDeployment.future().compose(id -> {
   
-        Promise<String> heatVerticleDeployment = Promise.promise();
+        Promise<String> ServerVerticle = Promise.promise();
         vertx.deployVerticle(
           "com.example.HttpServer",new DeploymentOptions()
             .setInstances(1),
-            heatVerticleDeployment);
+            ServerVerticle);
   
-        return heatVerticleDeployment.future();
+        return ServerVerticle.future();
 
       }).onComplete(ar -> {
   
-        vertx.deployVerticle("com.example.Listener");
-        vertx.deployVerticle("com.example.UpdateData");
+        vertx.deployVerticle("com.example.CounterHandler");
+        vertx.deployVerticle("com.example.CounterRepository");
 
         if (ar.succeeded()) {
           promise.complete();

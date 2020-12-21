@@ -1,4 +1,5 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- vert.x properties -->
         <vertx.version>4.0.0</vertx.version>
-        <vertx.verticle>com.example.MainVerticle</vertx.verticle>
+        <vertx.verticle>com.example.HttpServer</vertx.verticle>
         <!-- Maven plugins -->
         <vertx-maven-plugin.version>1.0.23</vertx-maven-plugin.version>
         <slf4jVersion>1.6.1</slf4jVersion>
@@ -61,6 +62,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-service-proxy</artifactId>
+            <version>${vertx.version}</version>
         </dependency>
 
     </dependencies>
