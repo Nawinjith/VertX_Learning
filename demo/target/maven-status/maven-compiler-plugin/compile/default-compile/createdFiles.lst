@@ -1,5 +1,0 @@
-com\example\RedisVerticle.class
-com\example\HttpServer.class
-com\example\CounterRepository.class
-com\example\CounterHandler.class
-com\example\MainVerticle.class
