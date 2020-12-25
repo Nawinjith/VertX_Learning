@@ -20,36 +20,17 @@ import io.vertx.junit5.VertxTestContext;
 @ExtendWith(VertxExtension.class)
 public class TestMainVerticle {
 
-    // @Test
-    // @DisplayName("⏱ Count 3 timer ticks")
-    // void countThreeTicks(Vertx vertx, VertxTestContext testContext) {
-    //     AtomicInteger counter = new AtomicInteger();
-    //     vertx.setPeriodic(100, id -> {
-    //         if (counter.incrementAndGet() == 3) {
-    //             testContext.completeNow();
-    //         }
-    //     });
-    // }
-
 
     @Test
-    @DisplayName("Deploy MainVerticle")
-    void deployMainVerticle(Vertx vertx, VertxTestContext testContext) {
-        vertx.deployVerticle(new MainVerticle(), testContext.succeeding(id -> testContext.completeNow()));
-    }
-
-
-    @Test
-    @DisplayName(" Update Number")
-    public void updateNumber(Vertx vertx) throws Exception {
+    @DisplayName("Update Number - Zero")
+    public void updateNumber(Vertx vertx) {
 
         SharedData data = vertx.sharedData();
         Counter store = new Counter(data);
         EventBus eventBus = vertx.eventBus();
        
-
         LocalMap<String, String> map1 = data.getLocalMap("mymap1");
-        map1.put("key", "10");
+        map1.put("key", "0");
         
         LocalMap<String, String> counter = data.getLocalMap("mymap1");
         Integer initial_value = Integer.valueOf(counter.get("key"));
@@ -62,8 +43,8 @@ public class TestMainVerticle {
         Optional<Integer> updated_value = store.get();
         Integer new_value = updated_value.get();
 
-        // Assert.assertEquals(11,new_value);
-        // assertThat(new_value).isEqualTo(11);
-        System.out.println(new_value);
+
+        assertEquals(1, new_value);
+        
     }
 }
