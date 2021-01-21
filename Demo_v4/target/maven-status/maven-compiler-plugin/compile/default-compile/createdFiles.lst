@@ -1,0 +1,6 @@
+com\example\ServerVerticle.class
+com\example\UpdateData.class
+com\example\RedisVerticle.class
+com\example\Counter.class
+com\example\MainVerticle.class
+com\example\DbService.class

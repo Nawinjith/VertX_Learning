@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test </title>
+</head>
+<body onload="init();">
+<div class="col-md-12 mt-1">
+    <div class="float-left">
+        <br>
+        <h3>Counter</h3>
+        Current Value (A): <span id="current_value_A" name="current_value"></span> |
+        Current Value (B): <span id="current_value_B" name="current_value"></span> |
+        Current Value (C): <span id="current_value_C" name="current_value"></span>
+        <br>
+        <br>
+        <div>
+            <input type="button" onclick="increment(0);" value="Increment_A">
+        </div>
+        <br>
+        <div>
+            <input type="button" onclick="increment(1);" value="Increment_B">
+        </div>
+        <br>
+        <div>
+            <input type="button" onclick="increment(2);" value="Increment_C">
+        </div>
+        <br>
+    </div>
+</div>
+</body>
+<!--<script src="https://unpkg.io/sockjs-client@1.5.0/dist/sockjs.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="js/vertx-eventbus.js"></script>
+
+<script type="text/javascript">
+
+    function init() {
+        registerHandler();
+    }
+
+    let eventBus;
+
+    function registerHandler() {    
+        eventBus = new EventBus('http://localhost:8080/eventbus');
+        eventBus.onopen = function () {
+            eventBus.registerHandler('number.updates', function (error, message) {
+            const new_valueA = message.body.counterA;
+            const new_valueB = message.body.counterB;
+            const new_valueC = message.body.counterC;
+            document.getElementById('current_value_A').innerHTML = new_valueA;
+            document.getElementById('current_value_B').innerHTML = new_valueB;
+            document.getElementById('current_value_C').innerHTML = new_valueC;
+            });
+        }
+    }
+
+    function increment(counterType) {
+
+        var counterData = {
+            "counter_type" : counterType
+        }
+        eventBus.send('update.number',counterData)
+    }
+</script>
+</html>
+
+
